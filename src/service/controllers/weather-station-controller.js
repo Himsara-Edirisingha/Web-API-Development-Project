@@ -12,11 +12,17 @@ async function create(req, res) {
 }
 
 async function get(req, res) {
-  res.send("<h1> get </h1>");
+  res.send(items);
 }
 
 async function getbyid(req, res) {
-  res.send("<h1> getbyid </h1>");
+  const id = parseInt(req.params.id);
+  const item = items.find((item) => item.id === id);
+  if (item) {
+    res.send(item);
+  } else {
+    res.status(404).send("Item not found");
+  }
 }
 
 async function remove(req, res) {
@@ -26,19 +32,18 @@ async function remove(req, res) {
 }
 
 async function update(req, res) {
-    const id = req.params.id;
-    const updatedItem = req.body;
+  const id = req.params.id;
+  const updatedItem = req.body;
 
-    const index = items.findIndex(item => item.id === parseInt(id));
+  const index = items.findIndex((item) => item.id === parseInt(id));
 
-    if (index !== -1) {
-        items[index] = { ...items[index], ...updatedItem };
-        res.send(items);
-    } else {
-        res.status(404).send("Item not found");
-    }
+  if (index !== -1) {
+    items[index] = { ...items[index], ...updatedItem };
+    res.send(items);
+  } else {
+    res.status(404).send("Item not found");
+  }
 }
-
 
 module.exports = {
   get: get,

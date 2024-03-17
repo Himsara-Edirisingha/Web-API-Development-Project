@@ -1,4 +1,3 @@
-
 const mongoose = require("./src/config/database.js");
 const express = require("express");
 
@@ -6,6 +5,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 mongoose.connection.on("connected", function () {
+
   const metricsdataRoute = require("./src/api/routes/metrics-data.routes.js");
   const weatherRoute = require("./src/api/routes/weather-station.routes.js");
 
