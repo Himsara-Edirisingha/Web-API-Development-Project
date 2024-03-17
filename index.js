@@ -1,11 +1,27 @@
+
 const express = require('express')
+const mongoose = require('mongoose');
+const global = require("./config.js");
 const app = express()
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || global.port;
 
-app.get('/', (req, res) => {
-  res.send('<h2>Test</h2>')
-})
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+const metricsdataRoute = require("./routes/metrics-data.routes");
+const weatherRoute = require("./routes/weather-station.routes.js");
+
+app.use("/metrics", metricsdataRoute);
+app.use("/weather", weatherRoute);
+
+
+mongoose
+  .connect(global.dbCon)
+  .then(() => {
+    console.log("DB Connection - Successfull");
+    app.listen(port, () => {
+      console.log(`Example app listening on port ${port}`);
+    });
+  })
+  .catch((err) => {
+    console.error(err);
+  });
+
