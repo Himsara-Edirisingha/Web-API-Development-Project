@@ -2,6 +2,7 @@ const mongoose = require("./src/config/database.js");
 const express = require("express");
 
 const app = express();
+
 const port = process.env.PORT || 3000;
 
 mongoose.connection.on("connected", function () {
