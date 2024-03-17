@@ -9,8 +9,8 @@ const port = process.env.PORT || global.port;
 const metricsdataRoute = require("./routes/metrics-data.routes");
 const weatherRoute = require("./routes/weather-station.routes.js");
 
-app.use("/metrics", metricsdataRoute);
-app.use("/weather", weatherRoute);
+app.use("/api/metrics", metricsdataRoute);
+app.use("/api/weather", weatherRoute);
 
 
 mongoose
