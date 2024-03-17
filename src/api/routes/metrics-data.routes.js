@@ -1,6 +1,6 @@
 const express = require('express');
 
-const controller = require("../controllers/metrics-data-controller.js");
+const controller = require("../../service/controllers/metrics-data-controller");
 
 const router = express.Router();
 

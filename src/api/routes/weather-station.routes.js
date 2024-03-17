@@ -1,7 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 
-const controller = require("../controllers/weather-station-controller.js");
+const controller = require("../../service/controllers/weather-station-controller");
 
 const router = express.Router();
 router.use(bodyParser.json());
