@@ -1,8 +1,9 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
-require('dotenv').config()
-
-const { authenticateToken } = require("./service/controllers/auth-controller.js");
+const {
+  authenticateToken,
+} = require("./service/controllers/auth-controller.js");
 
 app.use(express.json());
 
