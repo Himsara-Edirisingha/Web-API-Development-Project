@@ -1,4 +1,6 @@
 const MetricsData = require('../models/metricsdataModel');
+const jwt = require('jsonwebtoken');
+require('dotenv').config()
 
 let items = [
     { id: 1, name: "MetricsData 1" },
@@ -7,8 +9,9 @@ let items = [
   
   async function create(req, res) {
     const newitem = req.body;
-    items.push(newitem);
-    res.send(items);
+    const accessToken =jwt.sign(newitem,process.env.ACCESS_TOKEN_SECRET);
+    // items.push(newitem);
+    res.send(accessToken);
   }
   
   async function get(req, res) {
