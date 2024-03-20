@@ -8,7 +8,8 @@ const PERMISSION = {
 const USER_TYPES = {
   ADMIN: 1,
   DATAWRITER: 2,
-  GENERAL: 3,
+  REGISTERED:3,
+  GENERAL: 4,
 };
 
 module.exports = { PERMISSION, USER_TYPES };

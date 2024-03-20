@@ -24,19 +24,19 @@ function authPermission(permission) {
     //check for user permissions
     if (!req.user.permissions.includes(permission)) {
       res.status(401);
-      return res.send("Not allowed to perform this action");
+      return res.send("Not allowed to perform this action : User Doesn't have Permissions");
     }
     next();
   };
 }
 
 //user type check
-function authUserType(type) {
+function authUserType(types) {
   return (req, res, next) => {
     //check for user type
-    if (!req.user.type  === type) {
+    if (!types.includes(req.user.type)) {
       res.status(401);
-      return res.send("Not allowed to perform this action");
+      return res.send("Not allowed to perform this action :  User is not the right type");
     }
     next();
   };
