@@ -5,4 +5,10 @@ const PERMISSION = {
   DELETE: 4,
 };
 
-module.exports ={PERMISSION}
+const USER_TYPES = {
+  ADMIN: 1,
+  DATAWRITER: 2,
+  GENERAL: 3,
+};
+
+module.exports = { PERMISSION, USER_TYPES };
