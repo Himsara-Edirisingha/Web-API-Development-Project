@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const {
   authenticateToken,
-} = require("./service/controllers/auth-controller.js");
+} = require("./service/controllers/middleware/auth-controller.js");
 
 app.use(express.json());
 

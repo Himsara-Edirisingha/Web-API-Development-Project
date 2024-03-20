@@ -1,5 +1,6 @@
 const MetricsData = require("../models/metricsdataModel");
 const jwt = require("jsonwebtoken");
+const { PERMISSION } = require("../enums/enums");
 require("dotenv").config();
 
 let items = [
@@ -9,8 +10,13 @@ let items = [
 
 async function create(req, res) {
   const newitem = req.body;
-  const accessToken = jwt.sign(newitem, process.env.ACCESS_TOKEN_SECRET);
-  // items.push(newitem);
+  const newuser = {
+    username: "Himsara",
+    permissions: [],
+  };
+  newuser.permissions.push(PERMISSION.READ);
+  const accessToken = jwt.sign(newuser, process.env.ACCESS_TOKEN_SECRET);
+  items.push(newitem);
   res.send(accessToken);
 }
 
