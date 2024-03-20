@@ -12,4 +12,8 @@ const USER_TYPES = {
   GENERAL: 4,
 };
 
-module.exports = { PERMISSION, USER_TYPES };
+function getKeyByValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
+}
+
+module.exports = { PERMISSION, USER_TYPES, getKeyByValue };
