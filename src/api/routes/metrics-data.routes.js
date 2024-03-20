@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 
-
 const controller = require("../../service/controllers/metrics-data-controller");
 
 const router = express.Router();

@@ -23,11 +23,24 @@ function authPermission(permission) {
   return (req, res, next) => {
     //check for user permissions
     if (!req.user.permissions.includes(permission)) {
-      res.status(403);
-      return res.send("Not allowed to  perform this action");
+      res.status(401);
+      return res.send("Not allowed to perform this action");
     }
     next();
   };
 }
 
-module.exports = { authenticateToken,authPermission };
+//user type check
+function authUserType(type) {
+  return (req, res, next) => {
+    //check for user type
+    if (!req.user.type  === type) {
+      res.status(401);
+      return res.send("Not allowed to perform this action");
+    }
+    next();
+  };
+}
+
+
+module.exports = { authenticateToken,authPermission,authUserType };

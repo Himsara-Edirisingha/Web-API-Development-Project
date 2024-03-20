@@ -6,6 +6,7 @@ const {
 } = require("../../service/controllers/middleware/auth-controller");
 
 const controller = require("../../service/controllers/weather-station-controller");
+
 const router = express.Router();
 router.use(bodyParser.json());
 

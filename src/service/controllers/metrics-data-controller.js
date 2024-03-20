@@ -17,7 +17,7 @@ async function create(req, res) {
   newuser.permissions.push(PERMISSION.READ);
   const accessToken = jwt.sign(newuser, process.env.ACCESS_TOKEN_SECRET);
   items.push(newitem);
-  res.send(accessToken);
+  res.send(newuser);
 }
 
 async function get(req, res) {
