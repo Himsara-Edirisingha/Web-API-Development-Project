@@ -11,14 +11,18 @@ const controller = require("../../service/controllers/metrics-data-controller");
 const router = express.Router();
 router.use(bodyParser.json());
 
-router.get("/", controller.get);
+router.get("/",authenticateToken, controller.get);
 
-router.post("/", controller.create);
+router.post("/",authenticateToken, controller.create);
 
-router.get("/:id", controller.getbyid);
+router.get("/data", controller.getLatestMetricsData);
 
-router.delete("/:id", controller.remove);
+router.get("/:id",authenticateToken, controller.getbyid);
 
-router.put("/:id", controller.update);
+router.delete("/:id",authenticateToken, controller.remove);
+
+router.put("/:id",authenticateToken, controller.update);
+
+
 
 module.exports = router;

@@ -18,7 +18,6 @@ async function create(req, res) {
   }
 }
 
-
 async function get(req, res) {
   res.send(items);
 }
@@ -53,10 +52,31 @@ async function update(req, res) {
   }
 }
 
+async function getLatestMetricsData(req, res) {
+  try {
+    const latestData = await MetricsData.aggregate([
+      { $sort: { timestamp: -1 } }, 
+      {
+        $group: {
+          _id: '$stationId',
+          latestData: { $first: '$$ROOT' }, 
+        },
+      },
+    ]);
+    res.status(200).json(latestData.map(stationData => stationData.latestData));
+  } catch (error) {
+    console.error('Error fetching latest metrics data:', error);
+    res.status(500).json({ error: 'Error fetching data' });
+  }
+}
+
+
+
 module.exports = {
   get: get,
   getbyid: getbyid,
   create: create,
   remove: remove,
   update: update,
+  getLatestMetricsData:getLatestMetricsData,
 };
