@@ -9,16 +9,15 @@ let items = [
 ];
 
 async function create(req, res) {
-  const newitem = req.body;
-  const newuser = {
-    username: "Himsara",
-    permissions: [],
-  };
-  newuser.permissions.push(PERMISSION.READ);
-  const accessToken = jwt.sign(newuser, process.env.ACCESS_TOKEN_SECRET);
-  items.push(newitem);
-  res.send(items);
+  try {
+    const metrixdata = await MetricsData.create(req.body);
+    res.status(201).json({ message: "Data Recorded successfully!", data: metrixdata });
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+    return;
+  }
 }
+
 
 async function get(req, res) {
   res.send(items);
