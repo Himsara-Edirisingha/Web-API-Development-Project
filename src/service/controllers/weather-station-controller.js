@@ -1,53 +1,83 @@
 const WeatherStation = require("../models/weatherstationModel");
 
-let items = [
-  { id: 1, name: "Item 1" },
-  { id: 2, name: "Item 2" },
-];
-
 async function create(req, res) {
-  const newitem = req.body;
-  items.push(newitem);
-  res.send(items);
+  try {
+    const weatherStation = await WeatherStation.create(req.body);
+    res.status(201).json({ message: "WeatherStation created successfully!", data: weatherStation });
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+    return;
+  }
 }
 
 async function get(req, res) {
-  res.send(items);
+  try {
+    const weatherStations = await WeatherStation.find({});
+    res
+      .status(226)
+      .json({ message: "WeatherStation data retrieved successfully!", data: weatherStations });
+  } catch (err) {
+    res.status(500).send({ error: "Server error" });
+    return;
+  }
 }
 
-async function getbyid(req, res) {
-  const id = parseInt(req.params.id);
-  const item = items.find((item) => item.id === id);
-  if (item) {
-    res.send(item);
-  } else {
-    res.status(404).send("Item not found");
+
+async function getById(req, res) {
+  const id = req.params.id;
+  try {
+    const weatherStation = await WeatherStation.findById(id);
+
+    if (!weatherStation) {
+      return res.status(404).json({ error: "Weather station not found" });
+    }
+    res.status(200).json({ message: "Weather station retrieved successfully", data: weatherStation });
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).json({ error: "Server error" });
   }
 }
 
 async function remove(req, res) {
   const id = req.params.id;
-  items = items.filter((item) => item.id !== parseInt(id));
-  res.send(items);
+  try {
+    const deletedweatherStation = await WeatherStation.findByIdAndDelete({ _id: id });
+    if (deletedweatherStation) {
+      res
+        .status(200)
+        .send({ message: "WeatherStation deleted successfully", user: deletedweatherStation });
+    } else {
+      res.status(404).send({ error: "User not found" });
+    }
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send({ error: "Server error" });
+  }
 }
 
 async function update(req, res) {
   const id = req.params.id;
   const updatedItem = req.body;
-
-  const index = items.findIndex((item) => item.id === parseInt(id));
-
-  if (index !== -1) {
-    items[index] = { ...items[index], ...updatedItem };
-    res.send(items);
-  } else {
-    res.status(404).send("Item not found");
+  try {
+    const updatedweatherStation = await WeatherStation.findByIdAndUpdate(id, updatedItem, {
+      new: true,
+    });
+    if (updatedUser) {
+      res
+        .status(200)
+        .send({ message: "WeatherStation updated successfully", user: updatedweatherStation });
+    } else {
+      res.status(404).send({ error: "User not found" });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send({ error: "Server error" });
   }
 }
 
 module.exports = {
   get: get,
-  getbyid: getbyid,
+  getById: getById,
   create: create,
   remove: remove,
   update: update,

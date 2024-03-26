@@ -1,6 +1,6 @@
 const mongoose = require("./src/config/database.js");
 const app = require("./src/app");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 mongoose.connection.on("connected", function () {
   app.listen(port, () => {
