@@ -13,9 +13,7 @@ router.use(bodyParser.json());
 
 router.get("/", controller.get);
 
-
-
-router.post("/",authenticateToken,authUserType([USER_TYPES.DATAWRITER]),authPermission(PERMISSION.WRITE), controller.create);
+router.post("/", controller.create);
 
 router.get("/:id", controller.getbyid);
 
