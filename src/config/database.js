@@ -1,7 +1,7 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 
-const mongoURI =
-  "mongodb+srv://himsara789:systemusr56@dbwad.cg0tv8b.mongodb.net/whetherAPI?retryWrites=true&w=majority&appName=dbwad";
+const mongoURI =process.env.DB_URL;
 
 const options = {
 //   useNewUrlParser: true,
