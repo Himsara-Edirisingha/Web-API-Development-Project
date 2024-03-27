@@ -30,7 +30,7 @@ async function getByUsernamePassword(req, res) {
   try {
     const user = await User.findOne({ username: username, password: password });
     if (!user) {
-      res.status(404).send({ error: "User not found" });
+      res.status(404).send({data:{ error: "User not found" }});
     } else {
       res.status(200).send({ message: "User found", data: user });
     }
