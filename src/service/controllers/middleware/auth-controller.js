@@ -18,29 +18,7 @@ function authenticateToken(req, res, next) {
   });
 }
 
-//read-write-update-delete permission check
-function authPermission(permission) {
-  return (req, res, next) => {
-    //check for user permissions
-    if (!req.user.permissions.includes(permission)) {
-      res.status(401);
-      return res.send("Not allowed to perform this action : User Doesn't have Permissions");
-    }
-    next();
-  };
-}
-
-//user type check
-function authUserType(types) {
-  return (req, res, next) => {
-    //check for user type
-    if (!types.includes(req.user.type)) {
-      res.status(401);
-      return res.send("Not allowed to perform this action :  User is not the right type");
-    }
-    next();
-  };
-}
 
 
-module.exports = { authenticateToken,authPermission,authUserType };
+
+module.exports = { authenticateToken };
