@@ -9,7 +9,7 @@ const options = {
       version: '1.0.0',
       description: 'API documentation using Swagger',
     },
-    servers
+   
   },
   apis: ['./api/routes/*.js'],
 };
