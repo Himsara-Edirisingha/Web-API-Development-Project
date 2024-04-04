@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require('cors');
 const mongoSanitize =require("express-mongo-sanitize")
 const xss = require("xss-clean");
-const { specs, swaggerUi } = require('./swaggerConfig');
+const { specs, swaggerUi } = require('../swaggerConfig');
 const app = express();
 
 
