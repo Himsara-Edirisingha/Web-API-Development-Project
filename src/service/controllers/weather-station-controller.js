@@ -1,5 +1,9 @@
 const WeatherStationService = require("../services/weatherStationService")
 
+
+
+
+
 async function create(req, res) {
   try {
     const weatherStation = await WeatherStationService.createDevice(req.body)
