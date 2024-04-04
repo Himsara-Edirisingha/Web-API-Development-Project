@@ -1,16 +1,12 @@
-const MetricsData = require("../models/metricsdataModel");
+const metricsDataService = require('../services/metricsDataService');
 const jwt = require("jsonwebtoken");
 const { PERMISSION } = require("../enums/enums");
 require("dotenv").config();
 
-let items = [
-  { id: 1, name: "MetricsData 1" },
-  { id: 2, name: "MetricsData 2" },
-];
 
 async function create(req, res) {
   try {
-    const metrixdata = await MetricsData.create(req.body);
+    const metrixdata = await metricsDataService.createMatricsData(req.body);
     res.status(201).json({ message: "Data Recorded successfully!", data: metrixdata });
   } catch (err) {
     res.status(500).send({ error: err.message });
@@ -18,15 +14,19 @@ async function create(req, res) {
   }
 }
 
-async function get(req, res) {
-  res.send(items);
-}
-
+const get = async (req, res) => {
+  try {
+    const metrixdata = await metricsDataService.getAllMatricsData();
+    res.status(200).json({ message: "Data retrieved successfully", data: metrixdata });
+  } catch (err) {
+    res.status(500).send({ error: "Server error" });
+  }
+};
 async function getbyid(req, res) {
-  const id = parseInt(req.params.id);
-  const item = items.find((item) => item.id === id);
-  if (item) {
-    res.send(item);
+  const id = req.params.id;
+  const metrixdata = await metricsDataService.getMatricsDataById(id);
+  if (metrixdata) {
+    res.status(200).json({ message: "Data retrieved successfully", data: metrixdata });
   } else {
     res.status(404).send("Item not found");
   }
@@ -34,19 +34,20 @@ async function getbyid(req, res) {
 
 async function remove(req, res) {
   const id = req.params.id;
-  items = items.filter((item) => item.id !== parseInt(id));
-  res.send(items);
+  const metrixdata = await metricsDataService.deleteMatricsData(id);
+  if (metrixdata) {
+    res.status(200).json({ message: "Data deleted successfully", data: metrixdata });
+  } else {
+    res.status(404).send("Item not found");
+  }
 }
 
 async function update(req, res) {
   const id = req.params.id;
   const updatedItem = req.body;
-
-  const index = items.findIndex((item) => item.id === parseInt(id));
-
-  if (index !== -1) {
-    items[index] = { ...items[index], ...updatedItem };
-    res.send(items);
+  const metrixdata = await metricsDataService.updateMatricsData(id, updatedItem);
+  if (metrixdata) {
+    res.status(200).json({ message: "Data deleted successfully", data: metrixdata });
   } else {
     res.status(404).send("Item not found");
   }
@@ -54,15 +55,7 @@ async function update(req, res) {
 
 async function getLatestMetricsData(req, res) {
   try {
-    const latestData = await MetricsData.aggregate([
-      { $sort: { timestamp: -1 } }, 
-      {
-        $group: {
-          _id: '$stationId',
-          latestData: { $first: '$$ROOT' }, 
-        },
-      },
-    ]);
+    const latestData = await metricsDataService.getLatest();
     res.status(200).json(latestData.map(stationData => stationData.latestData));
   } catch (error) {
     console.error('Error fetching latest metrics data:', error);
@@ -71,12 +64,11 @@ async function getLatestMetricsData(req, res) {
 }
 
 
-
 module.exports = {
   get: get,
   getbyid: getbyid,
   create: create,
   remove: remove,
   update: update,
-  getLatestMetricsData:getLatestMetricsData,
+  getLatestMetricsData: getLatestMetricsData,
 };

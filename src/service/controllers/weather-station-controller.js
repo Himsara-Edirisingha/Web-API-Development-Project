@@ -1,8 +1,8 @@
-const WeatherStation = require("../models/weatherstationModel");
+const WeatherStationService = require("../services/weatherStationService")
 
 async function create(req, res) {
   try {
-    const weatherStation = await WeatherStation.create(req.body);
+    const weatherStation = await WeatherStationService.createDevice(req.body)
     res.status(201).json({ message: "WeatherStation created successfully!", data: weatherStation });
   } catch (err) {
     res.status(500).send({ error: err.message });
@@ -12,7 +12,7 @@ async function create(req, res) {
 
 async function get(req, res) {
   try {
-    const weatherStations = await WeatherStation.find({});
+    const weatherStations = await WeatherStationService.getAllDevices();
     res
       .status(226)
       .json({ message: "WeatherStation data retrieved successfully!", data: weatherStations });
@@ -26,7 +26,7 @@ async function get(req, res) {
 async function getById(req, res) {
   const id = req.params.id;
   try {
-    const weatherStation = await WeatherStation.findById(id);
+    const weatherStation = await WeatherStationService.getDeviceById(id) ;
 
     if (!weatherStation) {
       return res.status(404).json({ error: "Weather station not found" });
@@ -41,7 +41,7 @@ async function getById(req, res) {
 async function remove(req, res) {
   const id = req.params.id;
   try {
-    const deletedweatherStation = await WeatherStation.findByIdAndDelete({ _id: id });
+    const deletedweatherStation = await WeatherStationService.deleteDeviceById({ _id: id });
     if (deletedweatherStation) {
       res
         .status(200)
@@ -59,9 +59,7 @@ async function update(req, res) {
   const id = req.params.id;
   const updatedItem = req.body;
   try {
-    const updatedweatherStation = await WeatherStation.findByIdAndUpdate(id, updatedItem, {
-      new: true,
-    });
+    const updatedweatherStation = await WeatherStationService.updateDeviceById(id, updatedItem);
     if (updatedUser) {
       res
         .status(200)
