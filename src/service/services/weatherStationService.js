@@ -28,6 +28,9 @@ const updateDeviceById = async (id, updatedData) => {
 const authDevice = async (dname, apiKey) => {
   
     const station = await weatherStation.getByName(dname);
+    if(!station){
+        return null; 
+    }
     if (await bcrypt.compare(station.name, apiKey)) {
         return station;
     }
