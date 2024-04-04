@@ -5,7 +5,7 @@ const getMatrixData = async () => {
 };
 
 const getMetrixDataById = async (id) => {
-    return await MetricsData.findOne(id);
+    return await MetricsData.findOne({_id:id});
 };
 
 const createMatrixData = async (matrixData) => {
