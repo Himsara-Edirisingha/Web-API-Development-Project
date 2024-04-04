@@ -7,7 +7,7 @@ const { specs, swaggerUi } = require('../swaggerConfig');
 const app = express();
 
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+
 app.use(express.json());
 app.use(cors());
 
@@ -24,5 +24,7 @@ const weatherRoute = require("./api/routes/weather-station.routes.js");
 app.use("/api/user", userRoute);
 app.use("/api/metrics", metricsdataRoute);
 app.use("/api/weather", weatherRoute);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 module.exports = app;

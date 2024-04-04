@@ -11,6 +11,19 @@ const {
 const controller = require("../../service/controllers/metrics-data-controller");
 
 
+/**
+ * @swagger
+ * /api/user/:
+ *   get:
+ *     description: Get something
+ *     responses:
+ *       '200':
+ *         description: A successful response
+ *       '401':
+ *         description: Unauthorized you need to be authenticated to use this path
+ */
+
+
 router.get("/",authenticateToken, controller.get);
 
 router.post("/",authenticateToken, controller.create);

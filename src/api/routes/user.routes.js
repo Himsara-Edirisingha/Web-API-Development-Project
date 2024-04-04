@@ -15,13 +15,13 @@ router.use(bodyParser.json());
 
 router.get(
   "/",
-  // authenticateToken,
+  authenticateToken,
   // authPermission(PERMISSION.READ),
   // authUserType([USER_TYPES.ADMIN, USER_TYPES.REGISTERED]),
   controller.getUsers
 );
 
-router.post("/", controller.createUser);
+router.post("/",authenticateToken, controller.createUser);
 
 router.post("/auth", authcontroller.authUser);
 
