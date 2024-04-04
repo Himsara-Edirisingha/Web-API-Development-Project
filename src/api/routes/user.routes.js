@@ -15,9 +15,9 @@ router.use(bodyParser.json());
 
 router.get(
   "/",
-  authenticateToken,
-  authPermission(PERMISSION.READ),
-  authUserType([USER_TYPES.ADMIN, USER_TYPES.REGISTERED]),
+  // authenticateToken,
+  // authPermission(PERMISSION.READ),
+  // authUserType([USER_TYPES.ADMIN, USER_TYPES.REGISTERED]),
   controller.getUsers
 );
 
