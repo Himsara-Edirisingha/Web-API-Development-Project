@@ -71,7 +71,7 @@ router.use(bodyParser.json());
 
 router.get(
   "/",
-  authenticateToken,
+  // authenticateToken,
   controller.get
 );
 

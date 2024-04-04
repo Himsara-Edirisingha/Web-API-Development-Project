@@ -86,9 +86,9 @@ router.get(
 
 router.post(
   "/",
-  authenticateToken,
-  authPermission(PERMISSION.READ),
-  authUserType([USER_TYPES.ADMIN]),
+  // authenticateToken,
+  // authPermission(PERMISSION.READ),
+  // authUserType([USER_TYPES.ADMIN]),
   controller.createUser
 );
 

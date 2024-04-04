@@ -44,12 +44,9 @@ async function authUser(req, res) {
     }
 }
 
-
-
-
-
 module.exports = {
     authDevices: authDevices,
     authUser:authUser
 
 };
+

@@ -1,4 +1,5 @@
 const matricsDataRepository = require('../repositories/metricsDataRepository');
+const weatherDataRepository = require('../repositories/weatherStationRepository');
 
 const getAllMatricsData = async () => {
     return await matricsDataRepository.getAllUsers();
@@ -20,8 +21,15 @@ const updateMatricsData = async (id, updatedData) => {
     return await matricsDataRepository.updateMatrixData(id, updatedData);
 };
 
-const getLatest = async (id, updatedData) => {
-    return await matricsDataRepository.getLatest();
+const getLatest = async () => {
+    const weatherData = await matricsDataRepository.getLatest();
+    await Promise.all(weatherData.map(async (data) => {
+        console.log(data)
+        const station = await weatherDataRepository.getById(data.latestData.stationId.toString());
+        data.latestData.StatName = station.name;
+    }));
+    
+    return weatherData;
 };
 
 module.exports = {

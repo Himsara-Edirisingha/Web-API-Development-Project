@@ -5,7 +5,7 @@ const getAllDevices = async () => {
 };
 
 const getById = async (id) => {
-    return await WeatherStation.findOne({ id: id });
+    return await WeatherStation.findOne({ _id: id });
 };
 
 const getByName = async (dname) => {
